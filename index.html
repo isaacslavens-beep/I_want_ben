@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Queens vs Laurier - Cancelled</title>
+    <title>Queens vs Laurier - Match Countdown</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --purple: #4b2e83;
             --yellow: #fdd835;
             --white: #ffffff;
-            --red: #ff5252;
+            --blue: #2196f3;
         }
 
         body {
@@ -29,63 +29,62 @@
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: var(--yellow);
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            font-weight: 900;
         }
 
         .location {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 400;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             opacity: 0.9;
+            letter-spacing: 1px;
         }
 
-        .alert-box {
+        .countdown-container {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            gap: 20px;
             background: rgba(255, 255, 255, 0.1);
             padding: 40px;
             border-radius: 20px;
-            border: 2px solid var(--red);
+            border: 2px solid var(--yellow);
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            max-width: 80%;
+            margin-bottom: 30px;
         }
 
-        .status-title {
-            font-size: 2.5rem;
+        .time-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .time-value {
+            font-size: 4rem;
             font-weight: 900;
-            color: var(--red);
+            line-height: 1;
+        }
+
+        .time-label {
+            font-size: 0.8rem;
             text-transform: uppercase;
-            margin: 0;
-        }
-
-        .status-message {
-            font-size: 1.2rem;
-            line-height: 1.6;
-        }
-
-        .contact-link {
             color: var(--yellow);
-            text-decoration: none;
+            margin-top: 5px;
             font-weight: 700;
-            border-bottom: 2px solid transparent;
-            transition: border-color 0.3s;
         }
 
-        .contact-link:hover {
-            border-color: var(--yellow);
+        .match-info {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            font-weight: 700;
         }
 
         .roster {
-            margin-top: 50px;
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--white);
-            opacity: 0.6; /* Faded as event is cancelled */
         }
 
         .roster span {
@@ -103,9 +102,9 @@
 
         /* Mobile Optimization */
         @media (max-width: 600px) {
-            .alert-box { padding: 25px; }
-            .status-title { font-size: 1.8rem; }
-            h1 { font-size: 1.8rem; }
+            .countdown-container { gap: 10px; padding: 20px; }
+            .time-value { font-size: 2.5rem; }
+            h1 { font-size: 2rem; }
             .roster { font-size: 1.1rem; }
         }
     </style>
@@ -115,13 +114,25 @@
     <h1>Queens vs Laurier</h1>
     <div class="location">Carrville Community Centre</div>
 
-    <div class="alert-box">
-        <p class="status-title">Event Cancelled</p>
-        <p class="status-message">
-            Due to <strong>inclement weather (heavy rain)</strong>, the scheduled matchup has been cancelled for player safety.<br><br>
-            For more information, please contact <br>
-            <a href="mailto:resultscommitteeinfo@gmail.com" class="contact-link">resultscommitteeinfo@gmail.com</a>
-        </p>
+    <div class="match-info">SUNDAY, APRIL 26 @ 3:30 PM</div>
+
+    <div class="countdown-container" id="countdown">
+        <div class="time-block">
+            <span class="time-value" id="days">00</span>
+            <span class="time-label">Days</span>
+        </div>
+        <div class="time-block">
+            <span class="time-value" id="hours">00</span>
+            <span class="time-label">Hours</span>
+        </div>
+        <div class="time-block">
+            <span class="time-value" id="minutes">00</span>
+            <span class="time-label">Mins</span>
+        </div>
+        <div class="time-block">
+            <span class="time-value" id="seconds">00</span>
+            <span class="time-label">Secs</span>
+        </div>
     </div>
 
     <div class="roster">
@@ -129,8 +140,40 @@
         <span>Glazer</span>
         <span>Eitan</span>
         <span>Isaac</span>
-        <span>Spencer</span>
     </div>
+
+    <script>
+        function updateCountdown() {
+            // Target date: April 26, 2026 at 3:30 PM
+            // Note: Update year to 2026 based on current context
+            const targetDate = new Date("April 26, 2026 15:30:00").getTime();
+            const now = new Date().getTime();
+            const gap = targetDate - now;
+
+            if (gap <= 0) {
+                document.getElementById("countdown").innerHTML = "<div class='time-value'>MATCH LIVE</div>";
+                return;
+            }
+
+            const second = 1000;
+            const minute = second * 60;
+            const hour = minute * 60;
+            const day = hour * 24;
+
+            const d = Math.floor(gap / day);
+            const h = Math.floor((gap % day) / hour);
+            const m = Math.floor((gap % hour) / minute);
+            const s = Math.floor((gap % minute) / second);
+
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
 
 </body>
 </html>
