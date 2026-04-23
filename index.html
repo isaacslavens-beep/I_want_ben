@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Queens vs Laurier Countdown</title>
+    <title>Queens vs Laurier - Cancelled</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --purple: #4b2e83;
             --yellow: #fdd835;
             --white: #ffffff;
+            --red: #ff5252;
         }
 
         body {
@@ -42,33 +43,41 @@
             opacity: 0.9;
         }
 
-        #countdown {
-            display: flex;
-            gap: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 20px;
-            border: 2px solid var(--yellow);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .time-box {
+        .alert-box {
             display: flex;
             flex-direction: column;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid var(--red);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 80%;
         }
 
-        .time-value {
-            font-size: 4rem;
+        .status-title {
+            font-size: 2.5rem;
             font-weight: 900;
-            color: var(--yellow);
-            line-height: 1;
+            color: var(--red);
+            text-transform: uppercase;
+            margin: 0;
         }
 
-        .time-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            margin-top: 5px;
-            letter-spacing: 1px;
+        .status-message {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .contact-link {
+            color: var(--yellow);
+            text-decoration: none;
+            font-weight: 700;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .contact-link:hover {
+            border-color: var(--yellow);
         }
 
         .roster {
@@ -76,6 +85,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--white);
+            opacity: 0.6; /* Faded as event is cancelled */
         }
 
         .roster span {
@@ -93,8 +103,8 @@
 
         /* Mobile Optimization */
         @media (max-width: 600px) {
-            #countdown { gap: 10px; padding: 15px; }
-            .time-value { font-size: 2rem; }
+            .alert-box { padding: 25px; }
+            .status-title { font-size: 1.8rem; }
             h1 { font-size: 1.8rem; }
             .roster { font-size: 1.1rem; }
         }
@@ -105,23 +115,13 @@
     <h1>Queens vs Laurier</h1>
     <div class="location">Carrville Community Centre</div>
 
-    <div id="countdown">
-        <div class="time-box">
-            <span class="time-value" id="days">00</span>
-            <span class="time-label">Days</span>
-        </div>
-        <div class="time-box">
-            <span class="time-value" id="hours">00</span>
-            <span class="time-label">Hours</span>
-        </div>
-        <div class="time-box">
-            <span class="time-value" id="minutes">00</span>
-            <span class="time-label">Mins</span>
-        </div>
-        <div class="time-box">
-            <span class="time-value" id="seconds">00</span>
-            <span class="time-label">Secs</span>
-        </div>
+    <div class="alert-box">
+        <p class="status-title">Event Cancelled</p>
+        <p class="status-message">
+            Due to <strong>inclement weather (heavy rain)</strong>, the scheduled matchup has been cancelled for player safety.<br><br>
+            For more information, please contact the <br>
+            <a href="mailto:resultscommitteeinfo@gmail.com" class="contact-link">resultscommitteeinfo@gmail.com</a>
+        </p>
     </div>
 
     <div class="roster">
@@ -130,34 +130,7 @@
         <span>Eitan</span>
         <span>Isaac</span>
         <span>Spencer</span>
-
     </div>
 
-    <script>
-        const targetDate = new Date("April 25, 2026 14:00:00").getTime();
-
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = days.toString().padStart(2, '0');
-            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
-
-            if (distance < 0) {
-                clearInterval(interval);
-                document.getElementById("countdown").innerHTML = "<h2>GAME TIME!</h2>";
-            }
-        }
-
-        const interval = setInterval(updateCountdown, 1000);
-        updateCountdown();
-    </script>
 </body>
 </html>
