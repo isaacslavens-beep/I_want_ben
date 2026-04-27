@@ -10,8 +10,6 @@
             --purple: #4b2e83;
             --yellow: #fdd835;
             --white: #ffffff;
-            --hat-red: #d32f2f; /* Deep, visible red */
-            --hat-blue: #1976d2; /* Clear, visible blue */
         }
 
         body {
@@ -27,30 +25,28 @@
             height: 100vh;
             text-align: center;
             overflow: hidden;
-            position: relative; /* For absolutely positioning hats */
+            position: relative;
         }
 
-        /* Hat Styling and Positioning */
-        .hat {
+        /* Hat Image Styling */
+        .hat-img {
             position: absolute;
-            font-size: 8rem; /* Large hat size */
-            opacity: 0.8; /* Make them slightly transparent to blend */
-            user-select: none; /* Prevent text selection */
-            z-index: 10; /* Make sure hats show over background/container */
+            width: 250px; /* Adjust based on your image size */
+            height: auto;
+            z-index: 5;
+            pointer-events: none; /* Prevents images from interfering with clicks */
         }
 
-        .hat.red {
-            color: var(--hat-red);
-            top: 15%;
+        .red-hat {
+            top: 5%;
             left: 5%;
-            transform: rotate(-15deg); /* Tilt to the left */
+            transform: rotate(-15deg);
         }
 
-        .hat.blue {
-            color: var(--hat-blue);
-            bottom: 15%;
+        .blue-hat {
+            bottom: 5%;
             right: 5%;
-            transform: rotate(15deg); /* Tilt to the right */
+            transform: rotate(15deg);
         }
 
         h1 {
@@ -60,8 +56,8 @@
             color: var(--yellow);
             margin-bottom: 5px;
             font-weight: 900;
-            position: relative; /* Keep text above everything */
-            z-index: 20;
+            position: relative;
+            z-index: 10;
         }
 
         .location {
@@ -71,22 +67,23 @@
             opacity: 0.8;
             letter-spacing: 1px;
             position: relative;
-            z-index: 20;
+            z-index: 10;
         }
 
         .thank-you-container {
             background: rgba(255, 255, 255, 0.05);
             padding: 50px;
             border-radius: 20px;
-            border: 1px solid rgba(253, 216, 53, 0.3);
+            border: 2px solid var(--yellow);
             margin-bottom: 40px;
-            max-width: 600px;
+            max-width: 700px;
             position: relative;
-            z-index: 20;
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .thank-you-text {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 900;
             color: var(--white);
             margin: 0;
@@ -94,9 +91,10 @@
         }
 
         .sub-text {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-top: 15px;
-            color: var(--yellow);
+            color: var(--white);
+            opacity: 0.9;
             font-weight: 400;
             letter-spacing: 1px;
         }
@@ -106,7 +104,7 @@
             font-weight: 700;
             color: var(--white);
             position: relative;
-            z-index: 20;
+            z-index: 10;
         }
 
         .roster span {
@@ -124,19 +122,20 @@
 
         /* Mobile Optimization */
         @media (max-width: 600px) {
+            .hat-img { width: 120px; }
             .thank-you-container { padding: 30px 20px; width: 85%; }
             .thank-you-text { font-size: 1.8rem; }
             h1 { font-size: 2.2rem; }
-            .roster { font-size: 1.1rem; }
-            .hat { font-size: 5rem; } /* Scale hats down */
-            .hat.red { top: 10%; left: 2%; }
-            .hat.blue { bottom: 10%; right: 2%; }
+            .roster { font-size: 1rem; }
+            .roster span { margin: 0 10px; }
+            .roster span:not(:last-child)::after { right: -15px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="hat red">🧢</div> <div class="hat blue">🧢</div>
+    <img src="red-hat.png" alt="Red Hat" class="hat-img red-hat">
+    <img src="blue-hat.png" alt="Blue Hat" class="hat-img blue-hat">
 
     <h1>Queens vs Laurier</h1>
     <div class="location">Carrville Community Centre</div>
